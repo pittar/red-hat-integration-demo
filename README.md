@@ -58,3 +58,31 @@ Topics include:
 5. Demo the mocked API with Postman.
 6. Import API spec into 3Scale.
     
+## Appendix
+
+### Importing sample OpenAPI Spec.
+
+1. First, add a new remote to the `3scale` cli:
+
+```
+$ 3scale remote add demo https://<token>@<tenant-admin url>
+```
+
+2. Next, import the API from the OpenAPI spec url:
+
+```
+$ 3scale import openapi -d demo --default-credentials-userkey user_key --target_system_name ps2 https://petstore.swagger.io/v2/swagger.json
+```
+
+3. Create a new `Application` Plan for the new API Product.
+
+4. Under "Configuration -> Settings", change the auth key name to `api_key` to match the OpenAPI spec.
+
+5. Change the "Credentials Location" to `As HTTP Headers`.
+
+6. Add a `CORS` policy to the API after `3Scale APIcast`, and make sure the origins are set to `*`.
+
+7. Save and promote the configuration through staging and production.
+
+8. Make sure your default `Developer` account has registered a new `Application` for this API.  Copy the api key, as you'll need it in the Active Docs.
+
